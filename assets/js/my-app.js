@@ -13,8 +13,6 @@ $(document).ready(function() {
     radius: 50
   });
 
-
-
 io.socket.on('connect', function() {
   io.socket.emit('msg', "Hello just joined");
   io.socket.on('draw', drawRecieve);
