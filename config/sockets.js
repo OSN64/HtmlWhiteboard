@@ -30,6 +30,7 @@ module.exports.sockets = {
       data.user = socket.id;
       sails.sockets.blast("draw", data);
       // sails.sockets.blast("draw", data, socket);
+      // setting the socket varable you excude socket from the blast
     });
 
   },
