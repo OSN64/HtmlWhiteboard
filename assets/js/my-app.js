@@ -13,6 +13,9 @@ $(document).ready(function() {
     radius: 50
   });
   var currentAction;
+  var objWidth = 200;
+  var objHeight = 100;
+  var objColour;
   canvas.mousedown(function(e) {
     // event.preventDefault();
     /* Act on the event */
@@ -26,18 +29,18 @@ $(document).ready(function() {
     var y = e.offsetY;
     var x = e.offsetX;
     $('canvas').drawRect({
-      fillStyle: '#9F41A0',
+      fillStyle: objColour,
       x: x, y: y,
-      width: 200,
-      height: 100
+      width: objWidth,
+      height: objHeight
     });
     currentAction =
     { type: "rect",
     x:x,
     y:y,
-    width:200,
-    height:100,
-    fillStyle:'#9F41A0'
+    width:objWidth,
+    height:objWidth,
+    fillStyle:objColour
   }
   console.log("down")
 });
@@ -66,11 +69,18 @@ $(document).ready(function() {
       $('canvas').drawRect({
         fillStyle: data.fillStyle,
         x: data.x, y: data.y,
-        width: 200,
-        height: 100
+        width: data.width,
+        height: data.height
       });
     }
   }
+  $("#colourSel").on('click', 'a', function(event) {
+    event.preventDefault();
+    var hex = $( this ).data('selcolour');
+    objColour = "#" + hex;
+    console.log("user selected colour : " + hex);
+  });
+
 // // Create a drawHeart() method
 // $.jCanvas.extend({
 //   name: 'drawHeart',
