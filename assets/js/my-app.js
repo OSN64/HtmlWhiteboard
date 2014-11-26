@@ -12,11 +12,6 @@ $(document).ready(function() {
     x: 100, y: 100,
     radius: 50
   });
-
-io.socket.on('connect', function() {
-  io.socket.emit('msg', "Hello just joined");
-  io.socket.on('draw', drawRecieve);
-
   var currentAction;
   canvas.mousedown(function(e) {
     // event.preventDefault();
@@ -44,15 +39,26 @@ io.socket.on('connect', function() {
     height:100,
     fillStyle:'#9F41A0'
   }
+  console.log("down")
 });
 
-  canvas.mouseup(function(event) {
+  io.socket.on('connect', function() {
+    io.socket.emit('msg', "Hello just joined");
+    // i know that im supposed to keep any progressive on
+    // functionf after this in this anonymous function
+    // but i has issues with drawrecieve ataching on draw function
+  });
+  io.socket.on('draw', drawRecieve);
+  console.log("connected")
+
+
+  canvas.on("mouseup", function(event) {
     // event.preventDefault();
     /* Act on the event */
-    console.log("send")
+    console.log("up & send")
     io.socket.emit('draw', currentAction);
+    currentAction = null;
   });
-
   function drawRecieve(data) {
     console.log(data)
     console.log(data.user)
@@ -65,7 +71,6 @@ io.socket.on('connect', function() {
       });
     }
   }
-});
 // // Create a drawHeart() method
 // $.jCanvas.extend({
 //   name: 'drawHeart',
