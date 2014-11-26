@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Networked Canvas drawing</title>
+  <title>Networked Canvas drawing</title>
 
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!--
         Stylesheets and Preprocessors
@@ -25,43 +25,44 @@
             + Change the order of your CSS files
             + Import stylesheets from other directories
             + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
+          -->
 
-    <!--STYLES-->
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/css/ripples.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/css/material-wfont.min.css">
-    <link rel="stylesheet" href="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/css/material.min.css">
-    <link rel="stylesheet" href="/styles/importer.css">
-    <!--STYLES END-->
-</head>
+          <!--STYLES-->
+          <!-- Latest compiled and minified CSS -->
+          <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/css/ripples.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/css/material-wfont.min.css">
+          <link rel="stylesheet" href="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/css/material.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.6/nprogress.min.css">
+          <link rel="stylesheet" href="/styles/importer.css">
+          <!--STYLES END-->
+        </head>
 
-<body>
-<div id="box" class="container">
-{{> nav}}
+        <body>
+          <div id="box" class="container">
+            {{> nav}}
 
-{{#if errors}}
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
-                    class="sr-only">Close</span></button>
-            {{#each errors}}
+            {{#if errors}}
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                class="sr-only">Close</span></button>
+                {{#each errors}}
                 <div>{{this}}</div>
-            {{/each}}
-        </div>
-{{/if}}
-{{{ body }}}
-</div>
+                {{/each}}
+              </div>
+              {{/if}}
+              {{{ body }}}
+            </div>
 
 
-<div class="container">
-    <hr>
+            <div class="container">
+              <hr>
 
-    <footer>
-        <p>&copy; Company 2014</p>
-    </footer>
-</div>
+              <footer>
+                <p>&copy; Company 2014</p>
+              </footer>
+            </div>
 
 <!--
     Client-side Templates
@@ -82,11 +83,11 @@
         + Use a different template engine (handlebars, jade, dust, etc.)
         + Internationalize your client-side templates using a server-side
           stringfile before they're served.
--->
+        -->
 
-<!--TEMPLATES-->
+        <!--TEMPLATES-->
 
-<!--TEMPLATES END-->
+        <!--TEMPLATES END-->
 
 <!--
 
@@ -109,22 +110,25 @@
       + Import scripts from other directories
       + Use a different preprocessor, like TypeScript
 
--->
+    -->
 
-<!--SCRIPTS-->
-<script src="/js/dependencies/sails.io.js"></script>
-<script src="//code.jquery.com/jquery.js"></script>
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="//code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/js/ripples.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.1.6/js/material.min.js"></script>
     <script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
-    <script src=""></script>
-<script src="/js/my-app.js"></script>
-<!--SCRIPTS END-->
-        <script>
-            $(document).ready(function() {
-                $.material.init();
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.1.6/nprogress.min.js"></script>
+    <script src="/js/my-app.js"></script>
+    <!--SCRIPTS END-->
+    <script>
+      $(document).ready(function() {
+        NProgress.configure({ parent: '.jumbotron' });
+        NProgress.start();
+        NProgress.done();
+        $.material.init();
                 // trying to set width and height dynamicaly
                 // but run into the issu of having people with
                 // different screen sizes sqrewing up drawing
@@ -135,7 +139,7 @@
                 //   height: '1'
                 // });
 
-            });
-        </script>
-</body>
-</html>
+    });
+    </script>
+  </body>
+  </html>
