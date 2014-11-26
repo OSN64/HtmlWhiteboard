@@ -22,8 +22,15 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
   onConnect: function(session, socket) {
-
-    // By default, do nothing.
+    socket.on('msg', function (data) {
+      console.log("user " + socket.id + " says ' " + data.toString() + " '")
+    });
+    socket.on('draw', function(data) {
+      console.log(data)
+      data.user = socket.id;
+      sails.sockets.blast("draw", data);
+      // sails.sockets.blast("draw", data, socket);
+    });
 
   },
 
