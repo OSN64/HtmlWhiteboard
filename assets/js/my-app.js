@@ -25,6 +25,9 @@ io.socket.on('connect', function() {
     /* Act on the event */
     //somehow the offset uses the dimentions
     // relative to the canvas
+    // when client bug is fixed
+    // change to e.client.y
+    // change to e.client.x
     console.log(e.offsetY)
     console.log(e.offsetX)
     var y = e.offsetY;
