@@ -39,19 +39,19 @@
         console.log("No themes in db")
       }else {
         var rand;
-        console.log(themes)
+        // console.log(themes)
         console.log(themes.length)
         if (themes.length == 1) {
           rand = 0;
         }else{
           rand = Math.floor((Math.random() * themes.length -1 ) + 0);
         }
-        console.log(rand)
+        // console.log(rand)
         // res.locals.curTheme = themes[rand];
         res.locals.curTheme = "blash";
         console.log(res.locals.curTheme)
+        next();
       }
-      next();
     });
 
 //     // req._passport.instance = passport;
