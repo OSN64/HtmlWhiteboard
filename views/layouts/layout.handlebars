@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Networked Canvas drawing</title>
+  <title>Networked Canvas drawing - {{title}}</title>
 
   <!-- Viewport mobile tag for sensible mobile support -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -125,31 +125,34 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
     <script src="/js/my-app.js"></script>
     <!--SCRIPTS END-->
+
     <script>
       $(document).ready(function() {
-        NProgress.configure({ parent: '.jumbotron' });
+        NProgress.configure();
+        // NProgress.configure({ parent: '.jumbotron' });
         NProgress.start();
         NProgress.done();
         $.material.init();
-        $("#objWidth").noUiSlider({
-          start: 150,
-          connect: "lower",
-          range: {
-            min: 0,
-            max: 300
-          }
-        });
+        {{#ifcond  title "==" "home"}}
+          $("#objWidth").noUiSlider({
+            start: 150,
+            connect: "lower",
+            range: {
+              min: 0,
+              max: 300
+            }
+          });
 
-        $("#objHeight").noUiSlider({
-          orientation: "vertical",
-          start: 100,
-          connect: "lower",
-          range: {
-            min: 0,
-            max: 200
-          }
-        });
-                // trying to set width and height dynamicaly
+          $("#objHeight").noUiSlider({
+            orientation: "vertical",
+            start: 100,
+            connect: "lower",
+            range: {
+              min: 0,
+              max: 200
+            }
+          });
+          // trying to set width and height dynamicaly
                 // but run into the issu of having people with
                 // different screen sizes sqrewing up drawing
                 // console.log($('.jumbotron').height());
@@ -158,7 +161,7 @@
                 //   width: '1',
                 //   height: '1'
                 // });
-
+        {{/ifcond}}
     });
     </script>
   </body>

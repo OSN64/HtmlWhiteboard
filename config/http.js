@@ -9,7 +9,7 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.http.html
  */
 
-module.exports.http = {
+ module.exports.http = {
 
   /****************************************************************************
   *                                                                           *
@@ -21,7 +21,7 @@ module.exports.http = {
   *                                                                           *
   ****************************************************************************/
 
-  // middleware: {
+  middleware: {
 
   /***************************************************************************
   *                                                                          *
@@ -29,24 +29,57 @@ module.exports.http = {
   * router is invoked by the "router" middleware below.)                     *
   *                                                                          *
   ***************************************************************************/
+  theme: function (req,res,next) {
 
-    // order: [
-    //   'startRequestTimer',
-    //   'cookieParser',
-    //   'session',
-    //   'myRequestLogger',
-    //   'bodyParser',
-    //   'handleBodyParserError',
-    //   'compress',
-    //   'methodOverride',
-    //   'poweredBy',
-    //   '$custom',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    //   '404',
-    //   '500'
-    // ],
+        req._theme = {};
+        Theme.find({}, function(err, themes) {
+          if(err){
+            console.log("DB Error")
+          }
+          if(_.isEmpty(themes)){
+            console.log("No themes in db")
+          }else {
+          console.log(Theme)
+
+          req.theme = theme;
+          }
+        });
+
+//     // req._passport.instance = passport;
+
+//     // if (req.session && req.session[passport._key]) {
+//     //   // load data from existing session
+//     //   req._passport.session = req.session[passport._key];
+//     // } else if (req.session) {
+//     //   // initialize new session
+//     //   req.session[passport._key] = {};
+//     //   req._passport.session = req.session[passport._key];
+//     // } else {
+//     //   // no session is available
+//     //   req._passport.session = {};
+//     // }
+  // console.log("1")
+   next();
+  },
+
+   order: [
+   'startRequestTimer',
+   'cookieParser',
+   'session',
+   'myRequestLogger',
+   'bodyParser',
+   'handleBodyParserError',
+   'compress',
+   'methodOverride',
+   'poweredBy',
+   '$custom',
+   'router',
+   'theme',
+   'www',
+   'favicon',
+   '404',
+   '500'
+   ],
 
   /****************************************************************************
   *                                                                           *
@@ -71,7 +104,7 @@ module.exports.http = {
 
     // bodyParser: require('skipper')
 
-  // },
+  },
 
   /***************************************************************************
   *                                                                          *

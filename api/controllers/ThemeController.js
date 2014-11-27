@@ -6,6 +6,18 @@
  */
 
 module.exports = {
-	
+	index : function (req,res){
+    var params = req.params.all();
+
+    Theme.find({}, function(err, themes) {
+      if (err) {
+        console.log(err)
+      }
+      return res.view({
+        title:"Theme",
+        themes:themes
+      });
+    });
+  },
 };
 
