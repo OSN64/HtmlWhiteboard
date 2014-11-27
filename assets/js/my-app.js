@@ -2,20 +2,53 @@
 // dom and css are loaded its causing some unwanted
 // issues like not been able to clickon the canvas
 $(document).ready(function() {
-  var canvas = $("canvas");
+
+
+  var canvas = $("#myCanvas");
+  var prevCanvas = $("#previewCanvas")
   var width = canvas.width();
   var height = canvas.height();
   console.log(width + " " + height )
   canvas.drawArc({
-    // draggable: true,
-    fillStyle: "green",
-    x: 100, y: 100,
-    radius: 50
-  });
+      // draggable: true,
+      fillStyle: "green",
+      x: 100, y: 100,
+      radius: 50
+    });
   var currentAction;
   var objWidth = 200;
   var objHeight = 100;
-  var objColour;
+  var objColour = "#4285f4";
+  var objectType = "rect"; // to change soon
+
+    function setCurrObject(type, value){
+      switch(type){
+      case "width":
+      objWidth = value;
+      break;
+      case "height":
+      objHeight = value;
+      break;
+      case "colour":
+      objColour = value;
+      break;
+    }
+    drawPrev();
+  }
+  // draw the preview frame
+  function drawPrev(){
+    prevCanvas.clearCanvas();
+    switch(objectType){
+      case "rect":
+      prevCanvas.drawRect({
+        fillStyle: objColour,
+        x: prevCanvas.width()/2, y: prevCanvas.height()/2,
+        width: objWidth,
+        height: objHeight
+      });
+      break;
+    }
+  }
   canvas.mousedown(function(e) {
     // event.preventDefault();
     /* Act on the event */
@@ -28,7 +61,7 @@ $(document).ready(function() {
     console.log(e.offsetX)
     var y = e.offsetY;
     var x = e.offsetX;
-    $('canvas').drawRect({
+    $('#myCanvas').drawRect({
       fillStyle: objColour,
       x: x, y: y,
       width: objWidth,
@@ -47,12 +80,26 @@ $(document).ready(function() {
 
   io.socket.on('connect', function() {
     io.socket.emit('msg', "Hello just joined");
+    console.log("connected")
+
+
     // i know that im supposed to keep any progressive on
     // functionf after this in this anonymous function
     // but i has issues with drawrecieve ataching on draw function
   });
+  io.socket.on('user', function(data){
+    switch(data.type){
+      case "info":
+      console.log("msg " + data.msg)
+      $.snackbar({content: data.msg, style: "toast", timeout: 4000});
+      break;
+      default:
+      console.log("server sent msg")
+      console.log(data)
+      break;
+    }
+  });
   io.socket.on('draw', drawRecieve);
-  console.log("connected")
 
 
   canvas.on("mouseup", function(event) {
@@ -66,7 +113,7 @@ $(document).ready(function() {
     console.log(data)
     console.log(data.user)
     if(data.type == "rect"){
-      $('canvas').drawRect({
+      $('#myCanvas').drawRect({
         fillStyle: data.fillStyle,
         x: data.x, y: data.y,
         width: data.width,
@@ -77,8 +124,19 @@ $(document).ready(function() {
   $("#colourSel").on('click', 'a', function(event) {
     event.preventDefault();
     var hex = $( this ).data('selcolour');
-    objColour = "#" + hex;
+    setCurrObject("colour", "#" + hex);
     console.log("user selected colour : " + hex);
+
+  });
+  $('#objHeight').on({
+    slide: function(){
+      setCurrObject("height", $(this).val());
+    }
+  });
+  $('#objWidth').on({
+    slide: function(){
+      setCurrObject("width", $(this).val());
+    }
   });
 
 // // Create a drawHeart() method
@@ -124,4 +182,5 @@ $(document).ready(function() {
 //   radius: 50,
 //   x: 150, y: 130
 // });
+
 });
