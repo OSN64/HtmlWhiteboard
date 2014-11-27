@@ -77,6 +77,14 @@ $(document).ready(function() {
   }
   console.log("down")
 });
+  $('#myCanvas').mousedown(function(e) {
+    console.log("hold")
+    timeoutId = setTimeout(myFunction, 1000);
+}).bind('mouseup mouseleave', function(e) {
+    clearTimeout(timeoutId);
+    console.log("drag")
+});
+
 
   io.socket.on('connect', function() {
     io.socket.emit('msg', "Hello just joined");

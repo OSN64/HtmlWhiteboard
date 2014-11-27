@@ -29,46 +29,31 @@
   * router is invoked by the "router" middleware below.)                     *
   *                                                                          *
   ***************************************************************************/
-  theme: function (req,res,next) {
-    res.locals.curTheme = {};
-    Theme.find({}, function(err, themes) {
-      if(err){
-        console.log("DB Error")
-      }
-      if(_.isEmpty(themes)){
-        console.log("No themes in db")
-      }else {
-        var rand;
-        // console.log(themes)
-        console.log(themes.length)
-        if (themes.length == 1) {
-          rand = 0;
-        }else{
-          rand = Math.floor((Math.random() * themes.length -1 ) + 0);
-        }
-        // console.log(rand)
-        // res.locals.curTheme = themes[rand];
-        res.locals.curTheme = "blash";
-        console.log(res.locals.curTheme)
-        next();
-      }
-    });
-
-//     // req._passport.instance = passport;
-
-//     // if (req.session && req.session[passport._key]) {
-//     //   // load data from existing session
-//     //   req._passport.session = req.session[passport._key];
-//     // } else if (req.session) {
-//     //   // initialize new session
-//     //   req.session[passport._key] = {};
-//     //   req._passport.session = req.session[passport._key];
-//     // } else {
-//     //   // no session is available
-//     //   req._passport.session = {};
-//     // }
-  // console.log("1")
-},
+//   theme: function (req,res,next) {
+//     res.locals.curTheme = {};
+//     Theme.find({}, function(err, themes) {
+//       if(err){
+//         console.log("DB Error")
+//       }
+//       if(_.isEmpty(themes)){
+//         console.log("No themes in db")
+//       }else {
+//         var rand;
+//         // console.log(themes)
+//         console.log(themes.length)
+//         if (themes.length == 1) {
+//           rand = 0;
+//         }else{
+//           rand = Math.floor((Math.random() * themes.length -1 ) + 0);
+//         }
+//         // console.log(rand)
+//         // res.locals.curTheme = themes[rand];
+//         res.locals.curTheme = "blash";
+//         console.log(res.locals.curTheme)
+//         next();
+//       }
+//     })
+// },
 
 order: [
 'startRequestTimer',
