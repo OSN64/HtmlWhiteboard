@@ -9,12 +9,34 @@
  * For more information on the Sails logger, check out:
  * http://sailsjs.org/#/documentation/concepts/Logging
  */
- console.log("requre")
- module.exports.helpers = {
+//  console.log("requre")
+//  module.exports.helpers = {
 
-  ifcond : function (v1, v2){
-    console.log("helper")
-  },
-};
+//   ifcond : function (v1, operator, v2, options){
+//     console.log("helper")
+//   },
+// };
 // /usr/lib/node_modules/sails/node_modules/express-handlebars/node_modules/handlebars/dist/cjs/handlebars
 // cant get helpers to work
+// Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
+//     switch (operator) {
+//       case '==':
+//         return (v1 == v2) ? options.fn(this) : options.inverse(this);
+//       case '===':
+//         return (v1 === v2) ? options.fn(this) : options.inverse(this);
+//       case '<':
+//         return (v1 < v2) ? options.fn(this) : options.inverse(this);
+//       case '<=':
+//         return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+//       case '>':
+//         return (v1 > v2) ? options.fn(this) : options.inverse(this);
+//       case '>=':
+//         return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+//       case '&&':
+//         return (v1 && v2) ? options.fn(this) : options.inverse(this);
+//       case '||':
+//         return (v1 || v2) ? options.fn(this) : options.inverse(this);
+//       default:
+//         return options.inverse(this);
+//     }
+//   });

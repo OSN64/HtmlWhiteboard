@@ -1,3 +1,4 @@
+ {{{curTheme}}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +61,7 @@
               <hr>
 
               <footer>
-                <p>&copy; Company 2014</p>
+                <p>&copy; 3es 2014</p>
               </footer>
             </div>
 
@@ -133,7 +134,7 @@
         NProgress.start();
         NProgress.done();
         $.material.init();
-        {{#ifcond  title "==" "home"}}
+        {{#if home}}
           $("#objWidth").noUiSlider({
             start: 150,
             connect: "lower",
@@ -161,7 +162,7 @@
                 //   width: '1',
                 //   height: '1'
                 // });
-        {{/ifcond}}
+        {{/if}}
     });
     </script>
   </body>

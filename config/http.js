@@ -30,20 +30,29 @@
   *                                                                          *
   ***************************************************************************/
   theme: function (req,res,next) {
-
-        req._theme = {};
-        Theme.find({}, function(err, themes) {
-          if(err){
-            console.log("DB Error")
-          }
-          if(_.isEmpty(themes)){
-            console.log("No themes in db")
-          }else {
-          console.log(Theme)
-
-          req.theme = theme;
-          }
-        });
+    res.locals.curTheme = {};
+    Theme.find({}, function(err, themes) {
+      if(err){
+        console.log("DB Error")
+      }
+      if(_.isEmpty(themes)){
+        console.log("No themes in db")
+      }else {
+        var rand;
+        console.log(themes)
+        console.log(themes.length)
+        if (themes.length == 1) {
+          rand = 0;
+        }else{
+          rand = Math.floor((Math.random() * themes.length -1 ) + 0);
+        }
+        console.log(rand)
+        // res.locals.curTheme = themes[rand];
+        res.locals.curTheme = "blash";
+        console.log(res.locals.curTheme)
+      }
+      next();
+    });
 
 //     // req._passport.instance = passport;
 
@@ -59,27 +68,26 @@
 //     //   req._passport.session = {};
 //     // }
   // console.log("1")
-   next();
-  },
+},
 
-   order: [
-   'startRequestTimer',
-   'cookieParser',
-   'session',
-   'myRequestLogger',
-   'bodyParser',
-   'handleBodyParserError',
-   'compress',
-   'methodOverride',
-   'poweredBy',
-   '$custom',
-   'router',
-   'theme',
-   'www',
-   'favicon',
-   '404',
-   '500'
-   ],
+order: [
+'startRequestTimer',
+'cookieParser',
+'session',
+'myRequestLogger',
+'bodyParser',
+'handleBodyParserError',
+'compress',
+'methodOverride',
+'poweredBy',
+'$custom',
+'router',
+'theme',
+'www',
+'favicon',
+'404',
+'500'
+],
 
   /****************************************************************************
   *                                                                           *
