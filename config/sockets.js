@@ -10,7 +10,7 @@
  * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.sockets.html
  */
 
-module.exports.sockets = {
+ module.exports.sockets = {
 
   /***************************************************************************
   *                                                                          *
@@ -24,6 +24,9 @@ module.exports.sockets = {
   onConnect: function(session, socket) {
     socket.on('msg', function (data) {
       console.log("user " + socket.id + " says ' " + data.toString() + " '")
+      sails.sockets.blast("user",
+        { type:"info",
+          msg:"user " + socket.id + " just joined" } );
     });
     socket.on('draw', function(data) {
       console.log(data)
@@ -44,7 +47,10 @@ module.exports.sockets = {
   ***************************************************************************/
   onDisconnect: function(session, socket) {
 
-    // By default: do nothing.
+    sails.sockets.blast("user",
+        { type:"info",
+          msg:"user " + socket.id + " just left" } );
+    socket = null;
   },
 
 
@@ -57,12 +63,12 @@ module.exports.sockets = {
   * flashsockets by adding 'flashsocket' to this list:                       *
   *                                                                          *
   ***************************************************************************/
-  // transports: [
-  //   'websocket',
-  //   'htmlfile',
-  //   'xhr-polling',
-  //   'jsonp-polling'
-  // ],
+  transports: [
+    'websocket',
+    'htmlfile',
+    'xhr-polling',
+    'jsonp-polling'
+  ],
 
   /***************************************************************************
   *                                                                          *
@@ -71,7 +77,7 @@ module.exports.sockets = {
   *                                                                          *
   ***************************************************************************/
 
-  // adapter: 'memory',
+  adapter: 'memory',
 
   /***************************************************************************
   *                                                                          *

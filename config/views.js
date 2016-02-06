@@ -59,7 +59,8 @@ module.exports.views = {
 
 
     layout: 'layouts/layout',
-    partials: 'partials'
+    partials: 'partials',
+    // helpers: require('./helper')
 
   /****************************************************************************
   *                                                                           *

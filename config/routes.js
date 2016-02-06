@@ -20,7 +20,7 @@
  * http://sailsjs.org/#/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
-module.exports.routes = {
+ module.exports.routes = {
 
   /***************************************************************************
   *                                                                          *
@@ -33,9 +33,11 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': {
-    view: 'homepage'
-  }
-
+    view: 'homepage',
+    title: 'Home Page',
+    home:true
+  },
+  'post /theme': 'themeController.create',
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *

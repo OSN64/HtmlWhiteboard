@@ -2,22 +2,53 @@
 // dom and css are loaded its causing some unwanted
 // issues like not been able to clickon the canvas
 $(document).ready(function() {
-  var canvas = $("canvas");
+
+
+  var canvas = $("#myCanvas");
+  var prevCanvas = $("#previewCanvas")
   var width = canvas.width();
   var height = canvas.height();
   console.log(width + " " + height )
   canvas.drawArc({
-    // draggable: true,
-    fillStyle: "green",
-    x: 100, y: 100,
-    radius: 50
-  });
-
-io.socket.on('connect', function() {
-  io.socket.emit('msg', "Hello just joined");
-  io.socket.on('draw', drawRecieve);
-
+      // draggable: true,
+      fillStyle: "green",
+      x: 100, y: 100,
+      radius: 50
+    });
   var currentAction;
+  var objWidth = 200;
+  var objHeight = 100;
+  var objColour = "#4285f4";
+  var objectType = "rect"; // to change soon
+
+    function setCurrObject(type, value){
+      switch(type){
+      case "width":
+      objWidth = value;
+      break;
+      case "height":
+      objHeight = value;
+      break;
+      case "colour":
+      objColour = value;
+      break;
+    }
+    drawPrev();
+  }
+  // draw the preview frame
+  function drawPrev(){
+    prevCanvas.clearCanvas();
+    switch(objectType){
+      case "rect":
+      prevCanvas.drawRect({
+        fillStyle: objColour,
+        x: prevCanvas.width()/2, y: prevCanvas.height()/2,
+        width: objWidth,
+        height: objHeight
+      });
+      break;
+    }
+  }
   canvas.mousedown(function(e) {
     // event.preventDefault();
     /* Act on the event */
@@ -30,42 +61,92 @@ io.socket.on('connect', function() {
     console.log(e.offsetX)
     var y = e.offsetY;
     var x = e.offsetX;
-    $('canvas').drawRect({
-      fillStyle: '#9F41A0',
+    $('#myCanvas').drawRect({
+      fillStyle: objColour,
       x: x, y: y,
-      width: 200,
-      height: 100
+      width: objWidth,
+      height: objHeight
     });
     currentAction =
     { type: "rect",
     x:x,
     y:y,
-    width:200,
-    height:100,
-    fillStyle:'#9F41A0'
+    width:objWidth,
+    height:objWidth,
+    fillStyle:objColour
   }
+  console.log("down")
 });
+//   $('#myCanvas').mousedown(function(e) {
+//     console.log("hold")
+//     timeoutId = setTimeout(myFunction, 1000);
+// }).bind('mouseup mouseleave', function(e) {
+//     clearTimeout(timeoutId);
+//     console.log("drag")
+// });
 
-  canvas.mouseup(function(event) {
+
+  io.socket.on('connect', function() {
+    io.socket.emit('msg', "Hello just joined");
+    console.log("connected")
+
+
+    // i know that im supposed to keep any progressive on
+    // functionf after this in this anonymous function
+    // but i has issues with drawrecieve ataching on draw function
+  });
+  io.socket.on('user', function(data){
+    switch(data.type){
+      case "info":
+      console.log("msg " + data.msg)
+      $.snackbar({content: data.msg, style: "toast", timeout: 4000});
+      break;
+      default:
+      console.log("server sent msg")
+      console.log(data)
+      break;
+    }
+  });
+  io.socket.on('draw', drawRecieve);
+
+
+  canvas.on("mouseup", function(event) {
     // event.preventDefault();
     /* Act on the event */
-    console.log("send")
+    console.log("up & send")
     io.socket.emit('draw', currentAction);
+    currentAction = null;
   });
-
   function drawRecieve(data) {
     console.log(data)
     console.log(data.user)
     if(data.type == "rect"){
-      $('canvas').drawRect({
+      $('#myCanvas').drawRect({
         fillStyle: data.fillStyle,
         x: data.x, y: data.y,
-        width: 200,
-        height: 100
+        width: data.width,
+        height: data.height
       });
     }
   }
-});
+  $("#colourSel").on('click', 'a', function(event) {
+    event.preventDefault();
+    var hex = $( this ).data('selcolour');
+    setCurrObject("colour", "#" + hex);
+    console.log("user selected colour : " + hex);
+
+  });
+  $('#objHeight').on({
+    slide: function(){
+      setCurrObject("height", $(this).val());
+    }
+  });
+  $('#objWidth').on({
+    slide: function(){
+      setCurrObject("width", $(this).val());
+    }
+  });
+
 // // Create a drawHeart() method
 // $.jCanvas.extend({
 //   name: 'drawHeart',
@@ -109,4 +190,5 @@ io.socket.on('connect', function() {
 //   radius: 50,
 //   x: 150, y: 130
 // });
+
 });
